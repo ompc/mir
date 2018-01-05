@@ -118,8 +118,31 @@ find ${TARGET_DATE_DIR} -type f -name "*.jpeg"|sort|while read file;do
     gen_single_tt_csv ${file}
 done
 
+# 对日期场次下所有的CSV文件进行场次合并
+find ${TARGET_DATE_DIR} -type d -maxdepth 1|sed '1d'|while read play_times_dir;do
 
-# 对所有CSV文件按照日期进行合并
+    play_times=${play_times_dir##*/}
+    _tmp_TARGET_PLAY_TIMES_CSV_FILE=${play_times_dir}/${play_times}".tmp"
+    TARGET_PLAY_TIMES_CSV_FILE=${play_times_dir}/${play_times}".csv"
+
+    writeUTF8BOM _tmp_TARGET_PLAY_TIMES_CSV_FILE
+    cat ${play_times_dir}/*.csv \
+        | sed $'s/\xEF\xBB\xBF//g' \
+        | sort|uniq -c|awk '$1==1{print $2}' \
+        >> ${_tmp_TARGET_PLAY_TIMES_CSV_FILE}
+
+    # 正式替换CSV的临时文件为正式CSV文件
+    if [[ -f ${_tmp_TARGET_PLAY_TIMES_CSV_FILE} ]]; then
+        rm ${play_times_dir}/*.csv
+        mv ${_tmp_TARGET_PLAY_TIMES_CSV_FILE} ${TARGET_PLAY_TIMES_CSV_FILE}
+        echo "${TARGET_PLAY_TIMES_CSV_FILE} was generated."
+    else
+        echo "${TARGET_PLAY_TIMES_CSV_FILE} gen failed."
+    fi
+
+done
+
+# 对日期下所有场次CSV文件进行合并
 _tmp_TARGET_DATE_CSV_FILE=${TARGET_DATE_CSV_FILE}".tmp"
 rm -f ${TARGET_DATE_CSV_FILE} \
     && rm -f ${_tmp_TARGET_DATE_CSV_FILE} \
