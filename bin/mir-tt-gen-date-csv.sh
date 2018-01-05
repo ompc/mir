@@ -138,6 +138,7 @@ function gen_detail_md
 
 echo "
 ## ${TARGET_DATE}-积分变动明细
+
 |操作日期|游戏玩家|类型|数值|变更缘由|
 |---|---|---|---|---|
 " | grep -vE "^$" > ${_md_file}
