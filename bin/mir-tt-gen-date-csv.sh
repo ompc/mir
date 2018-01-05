@@ -136,12 +136,12 @@ function gen_detail_md
     mkdir -p ../out/detail
     _md_file="../out/detail/${TARGET_DATE}.md"
 
-echo "
+echo -n "
 ## ${TARGET_DATE}-积分变动明细
 
 操作日期|游戏玩家|类型|数值|变更缘由
 ---|---|---|---|---
-" | grep -vE "^$" > ${_md_file}
+" > ${_md_file}
 
     cat ${TARGET_DATE_CSV_FILE} \
         | grep -vE "^$" \
