@@ -130,11 +130,30 @@ rm -f ${TARGET_DATE_CSV_FILE} \
         >> ${_tmp_TARGET_DATE_CSV_FILE}
     done
 
+# 生成MD文件
+function gen_detail_md
+{
+    mkdir -p ../out/detail
+    _md_file="../out/detail/${TARGET_DATE}.md"
+
+echo "
+## ${TARGET_DATE}-积分变动明细
+|操作日期|游戏玩家|类型|数值|变更缘由|
+|---|---|---|---|---|
+" | grep -vE "^$" > ${_md_file}
+
+    cat ${TARGET_DATE_CSV_FILE} \
+        | grep -vE "^$" \
+        | sort -t ',' -k2 \
+        | awk -F "," '{printf("|%s|%s|%s|%s|%s|\n",$1,$2,$3,$4,$5)}' \
+        >> ${_md_file}
+}
+
 # 正式替换CSV的临时文件为正式CSV文件
 if [[ -f ${_tmp_TARGET_DATE_CSV_FILE} ]]; then
     mv ${_tmp_TARGET_DATE_CSV_FILE} ${TARGET_DATE_CSV_FILE}
     echo "${TARGET_DATE_CSV_FILE} was generated."
+    gen_detail_md
 else
     echo "${TARGET_DATE_CSV_FILE} gen failed."
 fi
-
