@@ -35,8 +35,9 @@ echo -n "
 
 cat ${SOURCE_CSV_FILE} \
     | awk -F "," '{m[$2]+=$4;c[$2]++;}END{for(i in m)printf("%s,%0.2f,%s\n",i,m[i],c[i])}' \
-    | sort -t ',' -nrk2,2 \
-    | awk -F "," '{if(NR<=3){printf("![](https://raw.githubusercontent.com/ompc/mir/master/out/img/TOP%s.png)|**%s**|**%s**|**%s**\n",NR,$1,$2,$3)}else{printf("%s|%s|%s|%s\n",NR,$1,$2,$3)}}' \
+    | sort -t ',' -nrk2,3 \
+    | awk -F "," '{if(c!=$2$3){c=$2$3;n++;}printf("%s,%s,%s,%s\n",n,$1,$2,$3)}' \
+    | awk -F "," '{if($1<=3){printf("![](https://raw.githubusercontent.com/ompc/mir/master/out/img/TOP%s.png)|**%s**|**%s**|**%s**\n",$1,$2,$3,$4)}else{printf("%s|%s|%s|%s\n",$1,$2,$3,$4)}}' \
     >> ${DETAIL_MD_FILE}
 
 echo "${DETAIL_MD_FILE} was generated."
