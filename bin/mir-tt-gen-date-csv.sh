@@ -9,10 +9,11 @@
 BASE_MIR_DIR="../data"
 
 # 名字映射文件
-NAME_MAPPING_FILE=${BASE_MIR_DIR}/name-mapping.txt
+NAME_MAPPING_FILE="../name-mapping.txt"
 
 # 指定需要生成的账务日期${1},yyyy-mm-dd
 TARGET_DATE=${1}
+[ -z ${TARGET_DATE} ]&&TARGET_DATE=$(date +%Y-%m-%d)
 
 # 获取指定账期
 TARGET_PAYMENT=${TARGET_DATE%-*}
