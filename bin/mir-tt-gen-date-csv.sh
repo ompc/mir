@@ -120,7 +120,9 @@ rm -f ${TARGET_DATE_CSV_FILE} \
     && rm -f ${_tmp_TARGET_DATE_CSV_FILE} \
     && writeUTF8BOM ${_tmp_TARGET_DATE_CSV_FILE} \
     && find ${TARGET_DATE_DIR} -type f -name "*.csv"|while read file;do
-        cat ${file} >> ${_tmp_TARGET_DATE_CSV_FILE}
+        cat ${file} \
+        | sed $'s/\xEF\xBB\xBF//g' \
+        >> ${_tmp_TARGET_DATE_CSV_FILE}
     done
 
 # 正式替换CSV的临时文件为正式CSV文件
