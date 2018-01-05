@@ -90,7 +90,6 @@ function gen_single_tt_csv
 
     # CSV临时文件
     local _tmp_tt_csv_file=${tt_csv_file}".tmp"
-    writeUTF8BOM ${_tmp_tt_csv_file}
 
     # 这里进行最重要的图像识别转换
     cat ${tt_img_file} \
@@ -100,7 +99,7 @@ function gen_single_tt_csv
             ${play_times_score} \
             ${play_times_score_reason} \
             ${NAME_MAPPING_FILE} \
-        >> ${_tmp_tt_csv_file} \
+        > ${_tmp_tt_csv_file} \
         || rm -f ${_tmp_tt_csv_file}
 
     # 正式替换CSV的临时文件为正式CSV文件
@@ -123,17 +122,14 @@ find ${TARGET_DATE_DIR} -type d -maxdepth 1|sed '1d'|while read play_times_dir;d
 
     play_times=${play_times_dir##*/}
     _tmp_TARGET_PLAY_TIMES_CSV_FILE=${play_times_dir}/${play_times}".tmp"
-    TARGET_PLAY_TIMES_CSV_FILE=${play_times_dir}/${play_times}".csv"
+    TARGET_PLAY_TIMES_CSV_FILE=${play_times_dir}/${play_times}"_play_times.csv"
 
-    writeUTF8BOM _tmp_TARGET_PLAY_TIMES_CSV_FILE
     cat ${play_times_dir}/*.csv \
-        | sed $'s/\xEF\xBB\xBF//g' \
-        | sort|uniq -c|awk '$1==1{print $2}' \
-        >> ${_tmp_TARGET_PLAY_TIMES_CSV_FILE}
+        | sort|uniq \
+        > ${_tmp_TARGET_PLAY_TIMES_CSV_FILE}
 
     # 正式替换CSV的临时文件为正式CSV文件
     if [[ -f ${_tmp_TARGET_PLAY_TIMES_CSV_FILE} ]]; then
-        rm ${play_times_dir}/*.csv
         mv ${_tmp_TARGET_PLAY_TIMES_CSV_FILE} ${TARGET_PLAY_TIMES_CSV_FILE}
         echo "${TARGET_PLAY_TIMES_CSV_FILE} was generated."
     else
@@ -147,9 +143,8 @@ _tmp_TARGET_DATE_CSV_FILE=${TARGET_DATE_CSV_FILE}".tmp"
 rm -f ${TARGET_DATE_CSV_FILE} \
     && rm -f ${_tmp_TARGET_DATE_CSV_FILE} \
     && writeUTF8BOM ${_tmp_TARGET_DATE_CSV_FILE} \
-    && find ${TARGET_DATE_DIR} -type f -name "*.csv"|while read file;do
+    && find ${TARGET_DATE_DIR} -type f -name "*_play_times.csv"|while read file;do
         cat ${file} \
-        | sed $'s/\xEF\xBB\xBF//g' \
         >> ${_tmp_TARGET_DATE_CSV_FILE}
     done
 
