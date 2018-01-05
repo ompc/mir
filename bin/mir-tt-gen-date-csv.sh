@@ -58,10 +58,10 @@ function gen_single_tt_csv
     local tt_csv_file=${tt_img_file%.*}".csv"
 
     # 如果CSV文件已经生成，则主动忽略
-    if [[ -f ${tt_csv_file} ]]; then
-        echo "${tt_csv_file} already existed, skip..."
-        return
-    fi
+#    if [[ -f ${tt_csv_file} ]]; then
+#        echo "${tt_csv_file} already existed, skip..."
+#        return
+#    fi
 
     # 获取场次目录
     local play_times_dir=${tt_csv_file%/*}
