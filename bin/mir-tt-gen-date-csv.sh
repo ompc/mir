@@ -145,7 +145,7 @@ echo -n "
 
     cat ${TARGET_DATE_CSV_FILE} \
         | grep -vE "^$" \
-        | sort -t ',' -k2 \
+        | sort -t ',' -k2,2 \
         | awk -F "," '{printf("%s|%s|%s|%s|%s\n",$1,$2,$3,$4,$5)}' \
         >> ${_md_file}
 }
