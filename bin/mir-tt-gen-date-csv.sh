@@ -77,6 +77,10 @@ function gen_single_tt_csv
 
     # 获取本场次分数
     local play_times_score=$(echo ${play_times}|awk -F "_" '{print $2}')
+    if [[ -z ${play_times_score} ]]; then
+        echo "${tt_csv_file} didn't have play time score, skip..."
+        return
+    fi
 
     # 获取本场次分数类型:当前为积分(1)
     local play_times_score_type=1
