@@ -112,8 +112,11 @@ function gen_single_tt_csv
 
 }
 
+# 清理CSV
+find ${TARGET_DATE_DIR} -type f -name "*.csv"|xargs rm
+
 # 找到MIR目录下所有场次的TT截图，并生成对应的CSV文件
-find ${TARGET_DATE_DIR} -type f -name "*.jpeg"|sort|while read file;do
+find ${TARGET_DATE_DIR} -type f |grep -E "\.jp[e]?g"|sort|while read file;do
     gen_single_tt_csv ${file}
 done
 
