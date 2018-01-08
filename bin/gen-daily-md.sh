@@ -25,7 +25,8 @@ DETAIL_MD_FILE="${DETAIL_MD_OUT_DIR}/${TARGET_DATE}.md"
 printf "## 当日积分排行榜：${TARGET_DATE}\n" > ${DETAIL_MD_FILE}
 
 ## 生成明细下载链接
-printf "[积分流水明细下载](../../data/${TARGET_DATE%-*}/${TARGET_DATE}/${TARGET_DATE}.csv)\n" >> ${DETAIL_MD_FILE}
+printf "[积分明细下载](../../data/${TARGET_DATE%-*}/${TARGET_DATE}/${TARGET_DATE}.csv)\n" >> ${DETAIL_MD_FILE}
+printf "[TT截图](./${TARGET_DATE}-PIC.html)\n" >> ${DETAIL_MD_FILE}
 
 ## 生成排行榜
 echo -n "
@@ -41,3 +42,11 @@ cat ${SOURCE_CSV_FILE} \
     >> ${DETAIL_MD_FILE}
 
 echo "${DETAIL_MD_FILE} was generated."
+
+DETAIL_PIC_MD_FILE="${DETAIL_MD_OUT_DIR}/${TARGET_DATE}-PIC.md"
+printf "## 当日积分TT截图：${TARGET_DATE}\n" > ${DETAIL_PIC_MD_FILE}
+find ../data/${TARGET_DATE%-*}/${TARGET_DATE} -type f |grep -E "jp[e]?g"|while read file;do
+    printf "![](../${file})\n" >> ${DETAIL_PIC_MD_FILE}
+done
+
+
