@@ -27,7 +27,7 @@ cat|./nocr.sh|grep -Eo "{\"words\": \"[^:]*"${PREFIX_WORDS}":[^}]*}" \
     | awk '{print substr($0,12)}' \
     | awk '{print substr($0,0,length($0)-2)}' \
     | awk -F ":" '{print $2}' \
-    | grep -vE "送给|(退出|进入)了房间|(下|上)线了|(下|上)麦" \
+    | grep -vE "送给|(退出|进入)了房|(下|上)线了|(下|上)麦" \
     | sed 's/,//g' \
     | ./name-mapping.sh ${NAME_MAPPING_FILE} \
     | sort \
