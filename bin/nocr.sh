@@ -17,7 +17,7 @@ NOCR_TEMP_IMG_FILE="/tmp/nocr.${NOCR_TOKEN}.tmp"
 
 cat > ${NOCR_TEMP_IMG_FILE}
 NOCR_IMG_FILE_MD5=$(cat ${NOCR_TEMP_IMG_FILE}|md5)
-NOCR_IMG_FILE_CACHE_JSON=$(cat ${NOCR_CACHE_FILE}|awk '/^'${NOCR_IMG_FILE_MD5}'$/,/^}$/')
+NOCR_IMG_FILE_CACHE_JSON=$(cat ${NOCR_CACHE_FILE}|awk '/^'${NOCR_IMG_FILE_MD5}'$/{p=1} /^}$/{if(p){print;exit}}p')
 
 if [[ -z ${NOCR_IMG_FILE_CACHE_JSON} ]]; then
     _temp_nocr_json=$(cat ${NOCR_TEMP_IMG_FILE} |${JAVA_HOME}/bin/java -jar ../lib/nocr-1.0.0.jar)
