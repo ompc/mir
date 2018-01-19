@@ -5,7 +5,7 @@
 #!/usr/bin/env bash
 
 # NOCR的缓存文件
-NOCR_CACHE_FILE=${HOME}/.nocr.cache
+NOCR_CACHE_FILE=../.nocr.cache
 touch ${NOCR_CACHE_FILE}
 
 # 生成本次随机TOKEN,用于生成临时文件计算MD5
