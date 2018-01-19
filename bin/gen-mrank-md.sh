@@ -28,6 +28,8 @@ MRANK_CHANGE_FILE="../data/${TARGET_MONTH}/change.csv"
 ## 生成页头
 printf "## 本月积分排行榜：${TARGET_MONTH}\n" > ${MRANK_MD_FILE}
 
+LAST_MRANK_DAY=$(ls ${TARGET_MONTH_DIR}|sort|uniq|tail -1)
+printf "> 最后更新日期：${LAST_MRANK_DAY}\n" >> ${MRANK_MD_FILE}
 
 ## 生成排行榜
 echo -n "
