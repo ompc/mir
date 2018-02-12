@@ -38,6 +38,7 @@
         <div class="page-header">
             <h3>
                 积分排行榜
+                <small>截止至：<span id="msg-export-date"></span></small>
             </h3>
         </div>
 
@@ -49,23 +50,19 @@
             数据不存在！！！
         </div>
 
-        <div id="gsm-table" class="table-responsive hidden">
-            <div id="message">
-                <span class="label label-default">截止时间</span>
-                <span id="msg-export-date" class="label label-primary">2018-01-01</span>
-                
+        <div id="gsm-table" class="hidden">
+            <div id="message" style="margin-bottom: 0.5em;">
                 <span class="label label-default">玩家</span>
-                <span id="msg-total-player" class="label label-primary"></span>
-                
-                <span class="label label-default">总积分：</span>
-                <span id="msg-total-score" class="label label-primary"></span>
-                
+                <span id="msg-total-player" class="label label-primary">...</span>
+                <span class="label label-default">总积分</span>
+                <span id="msg-total-score" class="label label-primary">...</span>
             </div>
-            <table class="table table-striped">
+            <div>
+                <table class="table table-striped container">
                 <thead>
                     <tr>
                         <th>排名</th>
-                        <th>TT号</th>
+                        <!--<th>TT号</th>-->
                         <th>玩家</th>
                         <th>活动</th>
                         <th>积分</th>
@@ -75,6 +72,7 @@
                 </thead>
                 <tbody/>
             </table>
+            </div>
         </div>
 
     </div>
@@ -112,6 +110,7 @@
                         $("#guild-name").text(data.guild.name);
                         $("#gsm-table").removeClass('hidden');
                         $(data.details).each(function(index, player) {
+                            player.ttNickname=tt_nickname_fix(player.ttNickname);
                             $("#gsm-table table tbody").append($.templates("#player-data").render(player));
                         });
                     })
@@ -149,12 +148,12 @@
             {{/if}} {{if ranking>3}}
             <td><span class="label label-default">第{{:ranking}}名</span></td>
             {{/if}}
-            <td>{{:ttNo}}</td>
-            <td>{{:ttNickname}}</td>
+            <!--<td>{{:ttNo}}</td>-->
+            <td><a href="./score.html?gid={{:guildId}}&pid={{:playerId}}">{{:ttNickname}}</a></td>
             <td>{{:activity}}</td>
             <td>{{:score}}</td>
             <td>{{:yb}}</td>
-            <td><a href="./score.html?gid={{:guildId}}&pid={{:playerId}}">查看流水</a></td>
+            <!--<td><a href="./score.html?gid={{:guildId}}&pid={{:playerId}}">查看流水</a></td>-->
         </tr>
 
     </script>

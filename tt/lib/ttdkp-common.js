@@ -35,3 +35,11 @@ Date.prototype.Format = function (fmt) {
 
     return fmt;
 }
+
+
+// 修正TT玩家昵称
+// 腾讯董事局t因为历史原因，所有的玩家都以"腾讯："作为开头
+// 但这样比较影响美观，所以这里做一个简单的修正
+function tt_nickname_fix(nickname) {
+    return nickname.replace("腾讯：","");
+}
