@@ -36,6 +36,7 @@
 
         <div class="page-header">
             <h3>行会积分流水查询</h3>
+            <a id="guild-query-link" href="#">返回行会积分排行榜</a>
         </div>
 
         <div class="container" id="sandbox-container">
@@ -252,6 +253,7 @@
 
             $("#goto-guild").attr('href', './guild.html?gid=' + gid);
             $("#guild-link").attr('href', './guild.html?gid=' + gid);
+            $("#guild-query-link").attr('href', './guild.html?gid=' + gid);
 
             console.info("guild=%s;daily=%s;player=%s;", gid, daily, pid);
 
