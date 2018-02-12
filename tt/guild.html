@@ -34,12 +34,14 @@
 
         <br/>
         <br/>
+        
 
         <div class="page-header">
             <h3>
                 积分排行榜
-                <small>截止至：<span id="msg-export-date"></span></small>
+                <small><span id="msg-export-date"></span></small>
             </h3>
+             <a id="flow-query-link" href="#">查看行会积分流水</a>
         </div>
 
         <div id="gsm-loading" class="alert alert-info" role="alert">
@@ -129,6 +131,7 @@
             }
 
             $("#goto-flow-query").attr("href", "./score.html?gid=" + gid);
+            $("#flow-query-link").attr("href", "./score.html?gid=" + gid);
 
             var url = "http://60.205.212.58:8080/export/guild/" + gid;
             loadingFromJsonData(url);
