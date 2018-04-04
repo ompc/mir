@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WORK_DIR="$1"
+WORK_DIR="../"
 CURRENT_DATE=$(date +%Y-%m-%d)
 
 cat guild.ids|while read gid;do
